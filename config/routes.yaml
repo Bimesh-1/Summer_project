@@ -1,0 +1,21 @@
+# config/routes.yaml
+
+index:
+    path: /
+    controller: App\Controller\MainController::index
+
+get_weather:
+    path: /weather
+    controller: App\Controller\MainController::getWeather
+
+get_countries:
+    path: /countries
+    controller: App\Controller\MainController::getCountries
+
+about_us:
+    path: /about-us
+    controller: App\Controller\MainController::aboutUs
+
+choose_plan:
+    path: /choose-your-plan
+    controller: App\Controller\MainController::choosePlan

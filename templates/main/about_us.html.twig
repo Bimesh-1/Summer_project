@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}About Us
+{% endblock %}
+
+
+{% block body %}
+	<style>
+		body {
+			background-image: url('{{ asset('about.gif') }}');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	</style>
+	<div class="content-wrapper">
+		<h1>About Us</h1>
+		<p>Welcome to REBS Travel Buddy, a platform born out of the collaboration and passion of four close friends – Randolph, Elias, Bimesh, and Shaheed. The initials of our names inspired the creation of the acronym REBS, which perfectly encapsulates the essence of our project: Routes, Exploration, and Best Solutions.
+																				
+																				Our journey began with a shared love for travel and a common goal to create something meaningful during our summer break. As students of the React 24k course at Business College Helsinki, we saw an opportunity to blend our interests and skills into a project that could benefit travel enthusiasts like ourselves. The result is REBS Travel Buddy, a comprehensive travel planning website designed to simplify the process of organizing trips by providing essential information about itineraries and weather forecasts.
+																				
+																				The core of our project is built on the Symfony framework, with Twig templates and CSS styling to ensure a seamless and visually appealing user experience. We chose Symfony for its robustness and flexibility, allowing us to create a scalable and maintainable application. Twig, with its elegant syntax, made templating straightforward and efficient, while CSS enabled us to craft a responsive and attractive design that enhances usability.
+																				
+																				At REBS Travel Buddy, we understand the myriad of considerations that go into planning a trip. From deciding on destinations to ensuring good weather, the process can be overwhelming. Our platform aims to alleviate this stress by offering a centralized source of information that covers all the bases. Whether you're looking for detailed itineraries, weather forecasts, or travel tips, our website has you covered.
+																				
+																				Our dedication to providing accurate and up-to-date information is reflected in the features of our website. Users can explore various destinations, view comprehensive itineraries, and check the latest weather conditions to make informed decisions about their travels. Our weather forecast feature is powered by reliable data sources, ensuring that you have the most accurate information at your fingertips.
+																				
+																				Looking ahead, we are excited about the future of REBS Travel Buddy. We have ambitious plans to expand our platform and introduce new features that will set us apart from other travel websites. These enhancements will include personalized travel recommendations, user-generated content, and integration with social media platforms to create a more interactive and community-driven experience.
+																				
+																				Our ultimate goal is to transform REBS Travel Buddy into a one-stop-shop for all travel-related needs. We envision a platform where users can not only plan their trips but also share their experiences, connect with other travelers, and find inspiration for their next adventure. We believe that by continuously improving our services and listening to feedback from our users, we can achieve this vision.
+																				
+																				We are incredibly grateful for the support and encouragement we have received from our mentors, peers, and the broader community. This project has been a labor of love, and we are thrilled to share it with the world. Thank you for visiting REBS Travel Buddy, and we hope that our platform will become an invaluable resource for all your travel planning needs.</p>
+		<footer>
+			<p>&copy; 2024 REBS Travel Buddy. All rights reserved.</p>
+		</footer>
+	{% endblock %}

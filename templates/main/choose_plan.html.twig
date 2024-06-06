@@ -1,0 +1,136 @@
+{# templates/main/choose_plan.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Choose Your Plan
+{% endblock %}
+
+{% block body %}
+<style>
+	body {
+		background-image: url('{{ asset('plan.gif') }}');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+</style>
+<h1 class="text-center my-4">Choose Your Plan</h1>
+
+<div class="search-box">
+	<h2>Destination</h2>
+	<div class="input-group mb-3">
+		<input type="text" class="form-control" id="country-search" placeholder="Search country">
+		<div class="input-group-append">
+			<button class="btn btn-custom" onclick="searchCountry()">Search</button>
+		</div>
+	</div>
+	<div id="country-result"></div>
+</div>
+
+<div class="search-box">
+	<h2>Weather</h2>
+	<div class="input-group mb-3">
+		<input type="text" class="form-control" id="weather-search" placeholder="Enter city">
+		<div class="input-group-append">
+			<button class="btn btn-custom" onclick="searchWeather()">Search</button>
+		</div>
+	</div>
+	<div id="weather-result"></div>
+</div>
+
+<div class="search-box">
+	<h2>Map</h2>
+	<div class="input-group mb-3">
+		<input type="text" class="form-control" id="map-search" placeholder="Enter location">
+		<div class="input-group-append">
+			<button class="btn btn-custom" onclick="searchMap()">Search</button>
+		</div>
+	</div>
+	<div id="map"></div>
+</div>
+
+<footer>
+	<p>&copy; 2024 REBS Travel Buddy. All rights reserved.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+<script>
+	async function searchCountry() {
+					        try {
+					            const query = document.getElementById('country-search').value.toLowerCase();
+					            const response = await fetch('/countries');
+					            if (!response.ok) throw new Error('Network response was not ok');
+					            const countries = await response.json();
+					            const result = countries.find(country => 
+					                country.name.common.toLowerCase().includes(query) || 
+					                (country.capital && country.capital[0].toLowerCase().includes(query))
+					            );
+					            document.getElementById('country-result').innerHTML = result ? `
+					                <h3>Country Information</h3>
+					                <p>Name: ${result.name.common}</p>
+					                <p>Capital: ${result.capital && result.capital[0]}</p>
+					                <p>Population: ${result.population}</p>
+					                <p>Region: ${result.region}</p>
+					                <p>Subregion: ${result.subregion}</p>
+					                <p>Languages: ${Object.values(result.languages).join(', ')}</p>
+					                <p>Currency: ${result.currencies ? Object.values(result.currencies).map(currency => `${currency.name} (${currency.symbol})`).join(', ') : 'N/A'}</p>
+					            ` : 'Country not found';
+					        } catch (error) {
+					            document.getElementById('country-result').innerText = 'Error fetching country data';
+					        }
+					    }
+					
+					    async function searchWeather() {
+					        try {
+					            const city = document.getElementById('weather-search').value;
+					            const response = await fetch(`/weather?city=${city}`);
+					            if (!response.ok) throw new Error('Network response was not ok');
+					            const weather = await response.json();
+					            document.getElementById('weather-result').innerText = weather.main ? `Temperature: ${(weather.main.temp - 273.15).toFixed(2)}°C` : 'City not found';
+					        } catch (error) {
+					            document.getElementById('weather-result').innerText = 'Error fetching weather data';
+					        }
+					    }
+					
+					    function searchMap() {
+					        const location = document.getElementById('map-search').value;
+					        mapboxgl.accessToken = '{{ mapbox_token }}';
+					        const map = new mapboxgl.Map({
+					            container: 'map',
+					            style: 'mapbox://styles/mapbox/streets-v11',
+					            center: [0, 0],
+					            zoom: 2
+					        });
+					
+					        const geocoder = new MapboxGeocoder({
+					            accessToken: mapboxgl.accessToken,
+					            mapboxgl: mapboxgl
+					        });
+					
+					        map.addControl(geocoder);
+					
+					        geocoder.query(location);
+					        geocoder.on('result', function(e) {
+					            const result = e.result;
+					            
+					            map.flyTo({
+					                center: result.center,
+					                zoom: 11,
+					                speed: 1.5,
+					                curve: 1
+					            });
+					
+					            new mapboxgl.Marker()
+					                .setLngLat(result.center)
+					                .addTo(map);
+					
+					            new mapboxgl.Popup({ offset: 25 })
+					                .setLngLat(result.center)
+					                .setHTML(`<h3>${result.place_name}</h3>`)
+					                .addTo(map);
+					        });
+					    }
+					</script>
+					{% endblock %}

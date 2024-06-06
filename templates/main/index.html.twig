@@ -1,0 +1,41 @@
+{# templates/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}REBS travel buddy
+{% endblock %}
+
+{% block body %}
+	<div class="content-wrapper">
+		<img
+		src="{{ asset('clip.gif') }}" id="gif-background" alt="Background GIF">
+
+		<!-- Centered Title -->
+		<h1 class="page-title">REBS. Routes, Exploration, and Best Solutions</h1>
+
+		<!-- Gallery Section -->
+		<div class="gallery-section">
+			<h2>Gallery</h2>
+			<div class="gallery">
+				<img src="/images/img43.jpg" alt="Gallery Image 1" class="big">
+				<img src="/images/img40.jpg" alt="Gallery Image 2">
+				<img src="/images/img43.jpg" alt="Gallery Image 3">
+				<img src="/images/img40.jpg" alt="Gallery Image 7" class="big">
+				<img src="/images/img40.jpg" alt="Gallery Image 4">
+				<img src="/images/img40.jpg" alt="Gallery Image 5">
+				<img src="/images/img43.jpg" alt="Gallery Image 6">
+				<img src="/images/test1.jpeg" alt="Gallery Image 8">
+				<img src="/images/img40.jpg" alt="Gallery Image 9">
+			</div>
+		</div>
+
+		<!-- REBS team QR Code  -->
+		<div class="qr-code">
+			<h2>Scan to Visit Our Team Website</h2>
+			<img src="/images/REBS_QR.png" alt="QR Code">
+		</div>
+
+		<footer>
+			<p>&copy; 2024 REBS Travel Buddy. All rights reserved.</p>
+		</footer>
+	</div>
+{% endblock %}
